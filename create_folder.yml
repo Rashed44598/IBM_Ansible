@@ -1,10 +1,14 @@
----
-- name: Test Create Folder on Windows
+- name: Test Windows Folder Creation
   hosts: all
-  gather_facts: no
-
+  vars:
+    ansible_connection: winrm
+    ansible_host: 192.168.1.189      # change to your Windows server IP
+    ansible_port: 5985
+    ansible_user: Administrator
+    ansible_password: P@ssw0rd
+    ansible_winrm_transport: basic
   tasks:
-    - name: Create test folder under C:\
+    - name: Create folder under C:\
       win_file:
-        path: C:\ManageIQ_Test
+        path: C:\TestFolder
         state: directory
