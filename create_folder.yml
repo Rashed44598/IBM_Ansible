@@ -1,0 +1,10 @@
+---
+- name: Test Create Folder on Windows
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Create test folder under C:\
+      win_file:
+        path: C:\ManageIQ_Test
+        state: directory
