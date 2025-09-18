@@ -3,12 +3,12 @@
   gather_facts: no
 
   vars:
-    # Map dialog vars to generic ones (adjust once we know exact names)
-   # windows_host: "{{ dialog_windows_host | default('') }}"
+    # Temporary mappings (adjust once you see real dialog_* vars)
+    windows_host: "{{ dialog_windows_host | default('') }}"
     windows_user: "{{ dialog_windows_user | default('') }}"
     windows_password: "{{ dialog_windows_password | default('') }}"
 
-    # Connection settings for WinRM
+    # Connection settings
     ansible_connection: winrm
     ansible_port: 5985
     ansible_user: "{{ windows_user }}"
@@ -27,4 +27,9 @@
         msg:
           - "Running against: {{ inventory_hostname }}"
           - "User: {{ ansible_user }}"
-          - "Password defined: {{ 'YES' if ansible_passwor_
+          - "Password defined: {{ 'YES' if (ansible_password is defined and ansible_password|length > 0) else 'NO' }}"
+
+    - name: Create folder under C:\
+      win_file:
+        path: C:\TestFolder
+        state: directory
