@@ -3,11 +3,10 @@
   vars:
     ansible_connection: winrm
     ansible_port: 5985
-    ansible_user: Administrator
-    ansible_password: "{{ ansible_password }}"
     ansible_winrm_transport: basic
   tasks:
     - name: Create folder under C:\
       win_file:
         path: C:\{{ folder_name }}
         state: directory
+
