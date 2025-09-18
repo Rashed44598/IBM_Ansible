@@ -19,7 +19,7 @@
     - name: Dump all dialog_* variables (masking passwords)
       debug:
         msg: "{{ item.key }} = {{ (item.value | string) if (item.key not in ['dialog_password','dialog_windows_password']) else '********' }}"
-      loop: "{{ vars | dict2items | selectattr('key', 'search', 'dialog') }}"
+      loop: "{{ vars | dict2items | selectattr('key', 'search', 'dialog') | list }}"
       tags: always
 
     - name: Debug connection info
