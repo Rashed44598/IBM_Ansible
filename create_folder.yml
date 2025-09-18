@@ -1,20 +1,13 @@
-- hosts: all
+- hosts: "{{ dialog_windows_host }}"
   vars:
-    ansible_user: "{{ dialog_windows_user }}"
-    ansible_password: "{{ dialog_windows_password }}"
     ansible_connection: winrm
     ansible_winrm_transport: basic
     ansible_port: 5985
-
+    ansible_user: "{{ dialog_windows_user }}"
+    ansible_password: "{{ dialog_windows_password }}"
   tasks:
-    - name: Debug connection info
+    - name: Show user
       debug:
-        msg:
-          - "Running against: {{ inventory_hostname }}"
-          - "User: {{ ansible_user }}"
-          - "Password defined: {{ ansible_password is defined }}"
+        msg: "User provided: {{ dialog_windows_user }}"
 
-    - name: Create folder under C:\
-      win_file:
-        path: C:\TestFolder
-        state: directory
+    - name: Show password (for debuggin
