@@ -1,17 +1,30 @@
-- hosts: all
+---
+- name: Create folder on Windows server
+  hosts: all
+  gather_facts: no
   vars:
-    ansible_connection: winrm
-    ansible_winrm_transport: basic
-    ansible_port: 5985
-    ansible_user: "{{ windows_user }}"
-    ansible_password: "{{ windows_password }}"
+    target_folder: "C:\\TestFolder"
+
   tasks:
-    - name: Show Windows user
+    - name: Show dialog variables (from catalog dialog)
       debug:
-        msg: "User = {{ ansible_user }}"
+        msg:
+          - "windows_user: {{ windows_user | default('NOT SET') }}"
+          - "windows_password defined?: {{ windows_password is defined }}"
 
-    - name: Show Windows password
+    - name: Show Ansible connection variables (actual runtime values)
       debug:
-        msg: "Password = {{ ansible_password }}"
-      no_log: false   # ⚠️ remove this once tested
+        msg:
+          - "ansible_host: {{ ansible_host | default('NOT SET') }}"
+          - "ansible_user: {{ ansible_user | default('NOT SET') }}"
+          - "ansible_password defined?: {{ ansible_password is defined }}"
 
+    - name: Dump ALL vars (for troubleshooting)
+      debug:
+        var: vars
+      when: false   # set to true if you want to see everything
+
+    - name: Ensure folder exists
+      win_file:
+        path: "{{ target_folder }}"
+        state: directory
