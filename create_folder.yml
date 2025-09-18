@@ -8,10 +8,16 @@
     ansible_port: 5985
 
   tasks:
+    - name: Ensure folder exists
+      win_file:
+        path: C:\Temp
+        state: directory
+
     - name: Create test file on Windows
-    win_copy:
-    content: "Hello from Ansible"
-    dest: C:\\Temp\\test.txt
+      win_copy:
+        content: "Hello from Ansible"
+        dest: C:\Temp\test.txt
+
 
 
 
