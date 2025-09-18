@@ -1,23 +1,9 @@
+---
 - name: Create folder on Windows server
   hosts: all
   gather_facts: no
 
-  vars:
-    ansible_connection: winrm
-    ansible_port: 5985
-    ansible_user: "{{ dialog_windows_user }}"
-    ansible_password: "{{ vars['password::dialog_windows_password'] }}"
-    ansible_winrm_transport: basic
-
   tasks:
-    - name: Debug dialog vars
+    - name: Dump all available vars
       debug:
-        msg:
-          - "dialog_windows_user: {{ dialog_windows_user | default('NOT SET') }}"
-          - "password::dialog_windows_password defined: {{ 'YES' if (vars['password::dialog_windows_password'] is defined and vars['password::dialog_windows_password']|length > 0) else 'NO' }}"
-          - "dialog_windows_host: {{ dialog_windows_host | default('NOT SET') }}"
-
-    - name: Create folder under C:\
-      win_file:
-        path: C:\TestFolder
-        state: directory
+        var: vars
