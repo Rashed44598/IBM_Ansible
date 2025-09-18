@@ -1,8 +1,4 @@
----
-- name: Create folder on Windows server
-  hosts: all
-  gather_facts: no
-
+- hosts: all
   vars:
     ansible_user: "{{ dialog_windows_user }}"
     ansible_password: "{{ dialog_windows_password }}"
@@ -15,5 +11,10 @@
       debug:
         msg:
           - "Running against: {{ inventory_hostname }}"
-          - "User: {{ ansible_user | default('undefined') }}"
-          - "Password defined: {{ 'YES' if ansible_password is defined else 'NO' }}"
+          - "User: {{ ansible_user }}"
+          - "Password defined: {{ ansible_password is defined }}"
+
+    - name: Create folder under C:\
+      win_file:
+        path: C:\TestFolder
+        state: directory
