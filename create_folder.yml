@@ -1,14 +1,13 @@
-- name: Test Windows Folder Creation
+- name: Test Create Folder on Windows
   hosts: all
   vars:
     ansible_connection: winrm
-    ansible_host: 192.168.1.189      # change to your Windows server IP
     ansible_port: 5985
     ansible_user: Administrator
-    ansible_password: P@ssw0rd
+    ansible_password: "{{ ansible_password }}"
     ansible_winrm_transport: basic
   tasks:
     - name: Create folder under C:\
       win_file:
-        path: C:\TestFolder
+        path: C:\{{ folder_name }}
         state: directory
