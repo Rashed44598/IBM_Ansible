@@ -5,7 +5,7 @@
 
   vars:
     ansible_user: "{{ dialog_windows_user }}"
-    ansible_password: "{{ lookup('vars', 'password::dialog_windows_password') }}"
+    ansible_password: "{{ dialog_windows_password }}"
     ansible_connection: winrm
     ansible_winrm_transport: basic
     ansible_port: 5985
@@ -17,8 +17,3 @@
           - "Running against: {{ inventory_hostname }}"
           - "User: {{ ansible_user | default('undefined') }}"
           - "Password defined: {{ 'YES' if ansible_password is defined else 'NO' }}"
-
-    - name: Create folder under C:\
-      win_file:
-        path: C:\DemoFolder
-        state: directory
