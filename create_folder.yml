@@ -8,15 +8,13 @@
     ansible_port: 5985
 
   tasks:
-    - name: Ensure folder exists
-      win_file:
-        path: C:\Temp
-        state: directory
+    - name: Run ipconfig
+      win_command: ipconfig
 
-    - name: Create test file on Windows
-      win_copy:
-        content: "Hello from Ansible"
-        dest: C:\Temp\test.txt
+    - name: Echo test
+      win_shell: echo Hello from Ansible > C:\Temp\ansible_test.txt
+      
+
 
 
 
