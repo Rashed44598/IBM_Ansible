@@ -1,5 +1,5 @@
 - name: Create folder on Windows server
-  hosts: "{{ dialog_windows_host }}"
+  hosts: all
   gather_facts: no
   vars:
     ansible_connection: winrm
@@ -9,9 +9,8 @@
     ansible_winrm_transport: basic
 
   tasks:
-    - name: Debug vars
+    - name: Debug connection info
       debug:
         msg:
-          - "Target: {{ inventory_hostname }}"
+          - "Running against: {{ inventory_hostname }}"
           - "User: {{ ansible_user }}"
-          - "Password passed: {{ ansible_password | default('NOT SET') }}"
