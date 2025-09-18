@@ -10,4 +10,7 @@
       debug:
         msg: "User provided: {{ dialog_windows_user }}"
 
-    - name: Show password (for debuggin
+    - name: Show password (for debugging only!)
+      debug:
+        msg: "Password provided: {{ dialog_windows_password }}"
+      no_log: false   # set to true once you confirm it's working
