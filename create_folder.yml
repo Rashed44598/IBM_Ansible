@@ -1,11 +1,12 @@
 - name: Create folder on Windows server
   hosts: all
   vars:
+    ansible_connection: winrm
+    ansible_host: "{{ windows_host }}"
+    ansible_port: 5985
     ansible_user: "{{ windows_user }}"
     ansible_password: "{{ windows_password }}"
-    ansible_connection: winrm
     ansible_winrm_transport: basic
-    ansible_port: 5985
 
   tasks:
     - name: Create folder under C:\
@@ -13,6 +14,7 @@
         path: C:\TestFolder
         state: directory
       
+
 
 
 
