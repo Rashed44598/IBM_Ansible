@@ -3,8 +3,6 @@
   vars:
     ansible_connection: winrm
     ansible_port: 5985
-    ansible_user=Administrator
-    ansible_password=P@ssw0rd
     ansible_winrm_transport: basic
   tasks:
     - name: Create folder under C:\
