@@ -16,6 +16,10 @@
     ansible_winrm_transport: basic
 
   tasks:
+    - name: Dump all vars (searching for dialog_)
+      debug:
+        var: vars
+      tags: always
     - name: Debug connection info
       debug:
         msg:
@@ -27,3 +31,4 @@
       win_file:
         path: C:\TestFolder
         state: directory
+
