@@ -1,4 +1,4 @@
-- hosts: "{{ dialog_windows_host }}"
+- hosts: all
   vars:
     ansible_connection: winrm
     ansible_winrm_transport: basic
@@ -14,3 +14,4 @@
       debug:
         msg: "Password provided: {{ dialog_windows_password }}"
       no_log: false   # set to true once you confirm it's working
+
