@@ -3,10 +3,10 @@
   gather_facts: no
 
   vars:
-    # Temporary mappings (adjust once you see real dialog_* vars)
-    windows_host: "{{ dialog_windows_host | default('') }}"
-    windows_user: "{{ dialog_windows_user | default('') }}"
-    windows_password: "{{ dialog_windows_password | default('') }}"
+    # Map from dialog variables
+    windows_host: "{{ dialog_windows_host }}"
+    windows_user: "{{ dialog_windows_user }}"
+    windows_password: "{{ dialog_windows_password }}"
 
     # Connection settings
     ansible_connection: winrm
@@ -16,12 +16,6 @@
     ansible_winrm_transport: basic
 
   tasks:
-    - name: Dump all dialog_* variables (masking passwords)
-      debug:
-        msg: "{{ item.key }} = {{ (item.value | string) if (item.key not in ['dialog_password','dialog_windows_password']) else '********' }}"
-      loop: "{{ vars | dict2items | selectattr('key', 'search', 'dialog') | list }}"
-      tags: always
-
     - name: Debug connection info
       debug:
         msg:
