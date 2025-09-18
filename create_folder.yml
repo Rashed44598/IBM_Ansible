@@ -10,5 +10,6 @@
   tasks:
     - name: Create fixed folder under C:\
       win_file:
-        path: "C:\\TestFolder"
+        path: "C:\TestFolder"
         state: directory
+
