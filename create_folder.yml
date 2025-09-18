@@ -3,12 +3,6 @@
   gather_facts: no
 
   vars:
-    # Map from dialog variables
-    windows_host: "{{ dialog_windows_host }}"
-    windows_user: "{{ dialog_windows_user }}"
-    windows_password: "{{ dialog_windows_password }}"
-
-    # Connection settings
     ansible_connection: winrm
     ansible_port: 5985
     ansible_user: "{{ windows_user }}"
@@ -16,10 +10,13 @@
     ansible_winrm_transport: basic
 
   tasks:
-    - name: Dump all vars (searching for dialog_)
+    - name: Debug all input vars
       debug:
-        var: vars
-      tags: always
+        msg:
+          - "Windows Host: {{ windows_host | default('NOT SET') }}"
+          - "Windows User: {{ windows_user | default('NOT SET') }}"
+          - "Windows Password defined: {{ 'YES' if (windows_password is defined and windows_password|length > 0) else 'NO' }}"
+
     - name: Debug connection info
       debug:
         msg:
@@ -31,4 +28,3 @@
       win_file:
         path: C:\TestFolder
         state: directory
-
