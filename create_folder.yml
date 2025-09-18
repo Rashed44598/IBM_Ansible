@@ -1,7 +1,14 @@
 - name: Create folder on Windows server
   hosts: all
   gather_facts: no
+
   vars:
+    # Map dialog vars to generic ones (adjust once we know exact names)
+   # windows_host: "{{ dialog_windows_host | default('') }}"
+    windows_user: "{{ dialog_windows_user | default('') }}"
+    windows_password: "{{ dialog_windows_password | default('') }}"
+
+    # Connection settings for WinRM
     ansible_connection: winrm
     ansible_port: 5985
     ansible_user: "{{ windows_user }}"
@@ -9,9 +16,15 @@
     ansible_winrm_transport: basic
 
   tasks:
+    - name: Dump all dialog_* variables (masking passwords)
+      debug:
+        msg: "{{ item.key }} = {{ (item.value | string) if (item.key not in ['dialog_password','dialog_windows_password']) else '********' }}"
+      loop: "{{ vars | dict2items | selectattr('key', 'search', 'dialog') }}"
+      tags: always
+
     - name: Debug connection info
       debug:
         msg:
           - "Running against: {{ inventory_hostname }}"
           - "User: {{ ansible_user }}"
-
+          - "Password defined: {{ 'YES' if ansible_passwor_
