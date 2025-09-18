@@ -6,23 +6,25 @@
     target_folder: "C:\\TestFolder"
 
   tasks:
-    - name: Show dialog variables (from catalog dialog)
+    - name: Show input variables
       debug:
         msg:
           - "windows_user: {{ windows_user | default('NOT SET') }}"
           - "windows_password defined?: {{ windows_password is defined }}"
+          - "windows_host: {{ windows_host | default('NOT SET') }}"
 
-    - name: Show Ansible connection variables (actual runtime values)
+    - name: Map custom vars to Ansible connection vars
+      set_fact:
+        ansible_user: "{{ windows_user }}"
+        ansible_password: "{{ windows_password }}"
+        ansible_host: "{{ windows_host | default(inventory_hostname) }}"
+
+    - name: Show mapped Ansible connection variables
       debug:
         msg:
-          - "ansible_host: {{ ansible_host | default('NOT SET') }}"
-          - "ansible_user: {{ ansible_user | default('NOT SET') }}"
+          - "ansible_user: {{ ansible_user }}"
           - "ansible_password defined?: {{ ansible_password is defined }}"
-
-    - name: Dump ALL vars (for troubleshooting)
-      debug:
-        var: vars
-      when: false   # set to true if you want to see everything
+          - "ansible_host: {{ ansible_host }}"
 
     - name: Ensure folder exists
       win_file:
