@@ -6,26 +6,18 @@
     ansible_connection: winrm
     ansible_port: 5985
     ansible_user: "{{ dialog_windows_user }}"
-    ansible_password: "{{ dialog_windows_password }}"
+    ansible_password: "{{ dialog['password::dialog_windows_password'] }}"
     ansible_winrm_transport: basic
 
   tasks:
-    - name: Debug all input vars
+    - name: Debug vars
       debug:
         msg:
-          - "Windows Host: {{ windows_host | default('NOT SET') }}"
-          - "Windows User: {{ windows_user | default('NOT SET') }}"
-          - "Windows Password defined: {{ 'YES' if (windows_password is defined and windows_password|length > 0) else 'NO' }}"
-
-    - name: Debug connection info
-      debug:
-        msg:
-          - "Running against: {{ inventory_hostname }}"
-          - "User: {{ ansible_user }}"
-          - "Password defined: {{ 'YES' if (ansible_password is defined and ansible_password|length > 0) else 'NO' }}"
+          - "User: {{ dialog_windows_user | default('NOT SET') }}"
+          - "Password defined: {{ 'YES' if (dialog['password::dialog_windows_password'] is defined and dialog['password::dialog_windows_password']|length > 0) else 'NO' }}"
+          - "Host: {{ dialog_windows_host | default('NOT SET') }}"
 
     - name: Create folder under C:\
       win_file:
         path: C:\TestFolder
         state: directory
-
