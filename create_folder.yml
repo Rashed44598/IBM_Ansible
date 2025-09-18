@@ -5,7 +5,7 @@
     ansible_connection: winrm
     ansible_port: 5985
     ansible_user: "{{ windows_user }}"
-    ansible_password: "{{ dialog_password }}"
+    ansible_password: "{{ windows_password }}"
     ansible_winrm_transport: basic
 
   tasks:
@@ -16,6 +16,7 @@
       win_file:
         path: C:\TestFolder
         state: directory
+
 
 
 
