@@ -6,12 +6,11 @@
     ansible_user: "{{ dialog_windows_user }}"
     ansible_password: "{{ dialog_windows_password }}"
   tasks:
-    - name: Show user
+    - name: Debug user
       debug:
-        msg: "User provided: {{ dialog_windows_user }}"
+        msg: "User = {{ ansible_user }}"
 
-    - name: Show password (for debugging only!)
+    - name: Debug password (temp)
       debug:
-        msg: "Password provided: {{ dialog_windows_password }}"
-      no_log: false   # set to true once you confirm it's working
-
+        msg: "Password = {{ ansible_password }}"
+      no_log: false   # remove after testing
