@@ -3,8 +3,8 @@
     ansible_connection: winrm
     ansible_winrm_transport: basic
     ansible_port: 5985
-    ansible_user: "{{ dialog_windows_user }}"
-    ansible_password: "{{ dialog_windows_password }}"
+    ansible_user: "{{ windows_user }}"
+    ansible_password: "{{ windows_password }}"
   tasks:
     - name: Show Windows user
       debug:
@@ -14,3 +14,4 @@
       debug:
         msg: "Password = {{ ansible_password }}"
       no_log: false   # ⚠️ remove this once tested
+
